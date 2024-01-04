@@ -8,7 +8,10 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/app',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [
+      { path: '', component: () => import('pages/IndexPage.vue') },
+      { name:'cardapio', path: '/cardapio', component: () => import('pages/CardapioRuPage.vue') },
+    ],
   },
 
   // Always leave this as last one,
