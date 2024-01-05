@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <header>
       <h2>BEM VINDO AO UNB NA MÃO</h2>
-  </div>
+  </header>
 </template>
 
 <script setup lang="ts">
-
 </script>
