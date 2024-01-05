@@ -48,7 +48,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple to="/cardapio">
           <q-item-section avatar>
             <q-icon name="restaurant_menu" />
           </q-item-section>
@@ -58,7 +58,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple to="/publicar">
           <q-item-section avatar>
             <q-icon name="send" />
           </q-item-section>
@@ -67,7 +67,7 @@
             Publicar
           </q-item-section>
         </q-item>
-          <q-item clickable v-ripple>
+          <q-item clickable v-ripple to="/calendario">
           <q-item-section avatar>
             <q-icon name="event" />
           </q-item-section>
@@ -76,7 +76,7 @@
             Calendário
           </q-item-section>
         </q-item>
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple to="/disciplinas">
           <q-item-section avatar>
             <q-icon name="school" />
           </q-item-section>
@@ -95,7 +95,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple @click="">
+        <q-item clickable v-ripple @click="" class="logout-section">
           <q-item-section avatar>
             <q-icon name="logout" />
           </q-item-section>
@@ -145,5 +145,8 @@ const toggleRightDrawer = () => {
       justify-content: center;
       cursor: pointer;
       margin: 5px;
+    }
+  .logout-section{
+      margin-bottom: 50px;
     }
 </style>
