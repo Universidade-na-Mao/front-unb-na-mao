@@ -6,24 +6,54 @@
       class="title row items-top justify-center"
     ></example-component>
     <div class="flex-container">
-      <QCard class="card">
-        <q-icon name="dynamic_feed" size="200px"/>
-      </QCard>
-      <QCard class="card">
-        <q-icon name="restaurant_menu" size="200px"/>
-      </QCard>
-      <QCard class="card">
-        <q-icon name="send" size="200px"/>
-      </QCard>
-      <QCard class="card">
-        <q-icon name="event" size="200px"/>
-      </QCard>
-      <QCard class="card">
-        <q-icon name="school" size="200px"/>
-      </QCard>
-      <QCard class="card">
-        <q-icon name="settings" size="200px"/>
-      </QCard>
+      <div>
+        <QCard class="card">
+          <RouterLink to="/feed">
+            <q-icon name="dynamic_feed" size="200px"/>
+          </RouterLink>
+        </QCard>
+        <p class="card-label">Feed</p>
+      </div>
+      <div>
+        <QCard class="card">
+          <RouterLink to="/cardapio">
+            <q-icon name="restaurant_menu" size="200px"/>
+          </RouterLink>
+        </QCard>
+        <p class="card-label">Cardápio</p>
+      </div>
+      <div>
+        <QCard class="card">
+          <RouterLink to="/publicar">
+            <q-icon name="send" size="200px"/>
+          </RouterLink>
+        </QCard>
+        <p class="card-label">Publicar</p>
+      </div>
+      <div>
+        <QCard class="card">
+          <RouterLink to="/calendario">
+            <q-icon name="event" size="200px"/>
+          </RouterLink>
+        </QCard>
+        <p class="card-label">Calendário</p>
+      </div>
+      <div>
+        <QCard class="card">
+          <RouterLink to="/disciplinas">
+            <q-icon name="school" size="200px"/>
+          </RouterLink>
+        </QCard>
+        <p class="card-label">Disciplinas</p>
+      </div>
+      <div>
+        <QCard class="card">
+          <RouterLink to="/configuracoes">
+            <q-icon name="settings" size="200px"/>
+          </RouterLink>
+        </QCard>
+        <p class="card-label">Configurações</p>
+      </div>
     </div>
   </q-page>
 </template>
@@ -63,5 +93,11 @@ import { ref } from 'vue';
     margin: 20px;
     box-shadow: 5px 5px 10px 1px #4e53ef;
     border-radius: 10px;
+  }
+  .card-label{
+    display: flex;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: bold;
   }
 </style>
