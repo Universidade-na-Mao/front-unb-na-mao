@@ -35,8 +35,7 @@
             </div>
         </div>
         <div class="top-div">
-            <button @click="esqueciSenha" filled  id="button" flat
-                class="q-mt-sm bg-yellow-10 text-white q-pa-sm">
+            <button @click="esqueciSenha" filled id="button" flat class="q-mt-sm bg-yellow-10 text-white q-pa-sm">
                 Esqueci minha Senha
             </button>
             <div v-if="modalEsqueciSenha" class="modal">
@@ -49,20 +48,22 @@
                     <form v-if="!codigoEnviado" class="relative row no-wrap q-mb-md q-gutter-x-sm q-px-md  items-center">
                         <q-input maxlength="60" name="user_email" autocomplete="on" required filled v-model="email"
                             :readonly="codigoEnviado" dense class="bg-white w100" label="E-mail *" />
-                        <q-btn @click="sendEmail()"  id="codigo" dense class="bg-yellow-10 text-white">Enviar Código</q-btn>
+                        <q-btn @click="sendEmail()" id="codigo" dense class="bg-yellow-10 text-white">Enviar Código</q-btn>
                     </form>
                     <div v-if="codigoEnviado && !novaSenha"
                         class="q-px-md row no-wrap items-center justify-between q-mb-md">
-                        <p class="no-margin w100">Digite o código que foi enviado em seu email:</p>
+                        <p class="no-margin w100">Digite o código que foi enviado em seu e-mail:</p>
                         <q-input label="Código" maxlength="4" mask="####" outlined v-model="campoCodigo" dense
                             class="bg-white " />
                     </div>
-                    <q-btn v-if="codigoEnviado && !novaSenha"
-                        :disable="!campoCodigo || campoCodigo && campoCodigo.length < 4" @click="resetarSenha"
-                        class="bg-orange-8 text-white  ">Verificar Código</q-btn>
+                    <div class="flex justify-center items-center">
+                        <q-btn v-if="codigoEnviado && !novaSenha"
+                            :disable="!campoCodigo || campoCodigo && campoCodigo.length < 4" @click="resetarSenha"
+                            class="bg-orange-8 text-white" style="width: 200px; height: 50px;">Verificar Código</q-btn>
+                    </div>
                     <div v-if="novaSenha" class="q-px-md column no-wrap q-mb-md">
                         <q-input label="Nova Senha" maxlength="20" v-model="senha" dense class="bg-white " />
-                        <q-btn class="bg-green-5 text-white q-mt-md" >Resetar a senha</q-btn>
+                        <q-btn class="bg-green-5 text-white q-mt-md">Resetar a senha</q-btn>
                     </div>
                 </div>
             </div>
@@ -81,6 +82,8 @@ import { ref } from 'vue';
 import LoadingComponent from 'src/components/LoadingComponent.vue';
 import { useRouter } from 'vue-router';
 import emailjs from '@emailjs/browser';
+import { index } from 'cheerio/lib/api/traversing';
+import { isImportTypeAssertionContainer } from 'typescript';
 
 const $q = useQuasar()
 const loading = ref(false)
@@ -105,71 +108,72 @@ const codigoGerado = ref(null) as any
 const novaSenha = ref(false)
 
 const esqueciSenha = () => {
-  modalEsqueciSenha.value = !modalEsqueciSenha.value
-  codigoEnviado.value = false
-  campoCodigo.value = null
-  novaSenha.value = false
+    modalEsqueciSenha.value = !modalEsqueciSenha.value
+    codigoEnviado.value = false
+    campoCodigo.value = null
+    novaSenha.value = false
 }
 
-
-
-const toggleCadastrando = () => {
-    cadastrando.value = !cadastrando.value
+function sendEmail() {
+    codigoGerado.value = generateFourDigitCode()
+    const emailData = {
+        user_email: email.value,
+        message: codigoGerado.value,
+    };
+    enviarCodigo();
+    emailjs.send('service_nbmlzbe', 'template_sl5yvnd', emailData, 'KD15sQJ-xFghabjnw')
+        .then((result) => {
+            console.log('SUCCESS!');
+        })
+        .catch((error) => {
+            console.log('FAILED...');
+        });
 }
 
 function generateFourDigitCode() {
-  // Gera um número aleatório entre 0 e 9999
-  const randomNumber = Math.floor(Math.random() * 10000);
+    // Gera um número aleatório entre 0 e 9999
+    const randomNumber = Math.floor(Math.random() * 10000);
 
-  // Formata o número para ter sempre 4 dígitos, adicionando zeros à esquerda se necessário
-  const codigoGerado = randomNumber.toString().padStart(4, '1');
+    // Formata o número para ter sempre 4 dígitos, adicionando zeros à esquerda se necessário
+    const codigoGerado = randomNumber.toString().padStart(4, '1');
 
-  return Number(codigoGerado);
+    return Number(codigoGerado);
 }
 
 
 const enviarCodigo = () => {
-  codigoEnviado.value = true
-}
-
-function sendEmail() {
-  codigoGerado.value = generateFourDigitCode()
-  const emailData = {
-    user_email: email.value,
-    message: codigoGerado.value,
-  };
-  enviarCodigo();
-  emailjs.send('service_nbmlzbe', 'template_sl5yvnd', emailData, 'KD15sQJ-xFghabjnw')
-    .then((result) => {
-      console.log('SUCCESS!');
-    })
-    .catch((error) => {
-      console.log('FAILED...');
-    });
+    codigoEnviado.value = true
 }
 
 const resetarSenha = () => {
-  if(campoCodigo.value == codigoGerado.value) {
-    $q.notify({
-      color: 'green-8',
-      textColor: 'white',
-      icon: 'check',
-      message: 'Código Correto',
-      position: 'top',
-    }); 
-    novaSenha.value = true
-  } else {
-    $q.notify({
-      color: 'red-8',
-      textColor: 'white',
-      icon: 'warning',
-      message: 'O código digitado está incorreto.',
-      position: 'top',
-    });
-    setTimeout(() => {
-      window.location.reload()
-    }, 1000);
-  }
+    if (campoCodigo.value == codigoGerado.value) {
+        $q.notify({
+            color: 'green-8',
+            textColor: 'white',
+            icon: 'check',
+            message: 'Código Correto',
+            position: 'top',
+        });
+        novaSenha.value = true
+    } else {
+        
+        $q.notify({
+            color: 'red-8',
+            textColor: 'white',
+            icon: 'warning',
+            message: 'O código digitado está incorreto.',
+            position: 'top',
+            
+
+        });
+        setTimeout(() => {
+            window.location.reload()
+        }, 1000);
+    }
+}
+
+const toggleCadastrando = () => {
+    cadastrando.value = !cadastrando.value
 }
 
 function printNegative(msg: string) {
@@ -180,7 +184,6 @@ function printNegative(msg: string) {
         icon: 'report_problem'
     })
 }
-
 
 function validaCampos() {
     if (!email.value.includes('@') || !email.value.includes('.')) {
@@ -364,25 +367,30 @@ const cadastrar = async () => {
 }
 
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  backdrop-filter: blur(5px);
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.modal-esqueci-senha{
-  background-color: #fafafa;
-  width: 35rem;
+.modal-esqueci-senha {
+    background-color: #fafafa;
+    width: 35rem;
+    
 }
+
+
 
 .top-div {
     position: relative;
     z-index: 9999;
-}</style>
+}
+
+</style>
