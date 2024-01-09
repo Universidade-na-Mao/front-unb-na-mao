@@ -270,6 +270,7 @@ const cadastrar = async () => {
                 limparCampos()
                 toggleCadastrando()
             })
+            
             .catch(error => {
                 $q.notify({
                     message: error.response.data.message,
