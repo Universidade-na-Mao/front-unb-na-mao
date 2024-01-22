@@ -85,7 +85,7 @@
             Disciplinas
           </q-item-section>
         </q-item>
-        <q-item clickable v-ripple  to="/configuracoes">
+        <q-item clickable v-ripple  to="/app/configuracoes">
           <q-item-section avatar>
             <q-icon name="settings" />
           </q-item-section>

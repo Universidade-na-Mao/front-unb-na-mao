@@ -48,7 +48,8 @@
       </div>
       <div>
         <QCard class="card">
-          <RouterLink to="/configuracoes">
+          <!-- Ajuste aqui para apontar para a nova rota -->
+          <RouterLink to="/app/configuracoes">
             <q-icon name="settings" size="200px"/>
           </RouterLink>
         </QCard>
@@ -59,16 +60,14 @@
 </template>
 
 <script setup lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
 import { ref } from 'vue';
 </script>
 
 <style scoped>
-  .page{
+  .page {
     background-color: whitesmoke;
   }
-  .title{
+  .title {
     display: flex;
   }
 
@@ -81,7 +80,7 @@ import { ref } from 'vue';
     align-content: space-around;
   }
 
-  .card{
+  .card {
     display: flex;
     background: linear-gradient(0deg, #31813e 0%, #4e53ef 100%);
     font-style: italic;
@@ -94,7 +93,7 @@ import { ref } from 'vue';
     box-shadow: 5px 5px 10px 1px #4e53ef;
     border-radius: 10px;
   }
-  .card-label{
+  .card-label {
     display: flex;
     justify-content: center;
     font-size: 15px;
