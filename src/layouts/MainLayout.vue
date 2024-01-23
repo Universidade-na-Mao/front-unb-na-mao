@@ -85,15 +85,16 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/disciplinas">
+          <q-item clickable v-ripple :to="{ name:'publicar-vagas' }">
             <q-item-section avatar>
-              <q-icon name="school" />
+              <q-icon name="event" />
             </q-item-section>
 
             <q-item-section>
-              Disciplinas
+              Publicar Vagas
             </q-item-section>
           </q-item>
+
           <q-item clickable v-ripple to="/configuracoes">
             <q-item-section avatar>
               <q-icon name="settings" />

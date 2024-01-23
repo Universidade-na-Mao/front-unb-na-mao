@@ -12,6 +12,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { name: 'controle-faltas', path: '/faltas', component: () => import('pages/ControleFaltasPage.vue') },
+      { name: 'publicar-vagas', path: '/faltas', component: () => import('pages/PublicarVagasPage.vue') },
+   
     ],
   },
 
