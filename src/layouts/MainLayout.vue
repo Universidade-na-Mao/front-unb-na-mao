@@ -85,6 +85,17 @@
             </q-item-section>
           </q-item>
 
+
+          <q-item clickable v-ripple :to="{ name:'disciplinateste' }">
+            <q-item-section avatar>
+              <q-icon name="event" />
+            </q-item-section>
+
+            <q-item-section>
+              Avaliar disciplinas
+            </q-item-section>
+          </q-item>
+          
           <q-item clickable v-ripple :to="{ name:'disciplinas' }">
             <q-item-section avatar>
               <q-icon name="event" />
